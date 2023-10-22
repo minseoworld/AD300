@@ -7,6 +7,7 @@ public class GUI extends JFrame{
     JFrame j = new JFrame("Box GUI");
 
     private Box box;
+
     private JLabel lengthLabel, widthLabel, heightLabel;
     private JTextField lengthTextField, widthTextField, heightTextField;
     private JButton calculateVolumeButton, calculateSurfaceAreaButton, displayBoxDetailsButton;
@@ -14,14 +15,14 @@ public class GUI extends JFrame{
     public GUI(){
         box = new Box();
 
-        //java swing
+        //JFrame setting
         setTitle("Box GUI");
         setBounds(100,100,100,100);
         setSize(500, 300);
         setLayout(null);
         setVisible(true);
 
-        //task 1
+        //GUI components
         lengthLabel = new JLabel("Length:");
         widthLabel = new JLabel("Width:");
         heightLabel = new JLabel("Height:");
@@ -34,7 +35,7 @@ public class GUI extends JFrame{
         calculateSurfaceAreaButton = new JButton("Calculate Surface Area");
         displayBoxDetailsButton = new JButton("Display Box Details");
 
-        //task 2
+        //GUI layout setting
         setLayout(new GridLayout(3,3));
         add(lengthLabel);
         add(widthLabel);
@@ -48,7 +49,7 @@ public class GUI extends JFrame{
         add(calculateSurfaceAreaButton);
         add(displayBoxDetailsButton);
 
-        //task 3
+        //corresponding action; after click button
         calculateVolumeButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
