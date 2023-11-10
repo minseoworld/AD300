@@ -10,6 +10,7 @@ class boxTest {
     void volume() {
         box myBox = new box(5, 5, 5);
         double expectedVolume = 125.0;
+        assertEquals(expectedVolume, myBox.volume(), 0.0001, "Volume calculation is incorrect");
     }
 
     @Test
