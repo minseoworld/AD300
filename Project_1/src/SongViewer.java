@@ -9,7 +9,7 @@ import java.io.FileReader;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class SongViewer extends JFrame {
+public class SongViewer extends JFrame{
     private JComboBox<String> yearComboBox;
     private JButton loadDataButton;
     private JButton prevButton;
@@ -20,7 +20,7 @@ public class SongViewer extends JFrame {
     private String[] years;
     private int selectedYearIndex = 0;
 
-    public SongViewer() {
+    public SongViewer(){
         setTitle("Song Viewer");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,6 +31,7 @@ public class SongViewer extends JFrame {
         prevButton = new JButton("Prev");
         nextButton = new JButton("Next");
         songInfoTextArea = new JTextArea();
+
 
         DefaultListModel<String> yearListModel = new DefaultListModel<>();
         JList<String> yearList = new JList<>(yearListModel);
@@ -48,29 +49,31 @@ public class SongViewer extends JFrame {
         add(new JScrollPane(songInfoTextArea), BorderLayout.CENTER);
         add(yearScrollPane, BorderLayout.SOUTH);
 
+        years = new String[0];
+
         loadDataButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 loadData();
             }
         });
 
-        prevButton.addActionListener(new ActionListener() {
+        prevButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 showPreviousYear();
             }
         });
 
-        nextButton.addActionListener(new ActionListener() {
+        nextButton.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 showNextYear();
             }
         });
     }
 
-    private void loadData() {
+    private void loadData(){
         songInfoTextArea.setText("");
 
         String selectedYear = yearComboBox.getSelectedItem().toString();
@@ -98,7 +101,6 @@ public class SongViewer extends JFrame {
 
                 }
             }
-
             songReader.close();
         } catch(CsvValidationException | IOException ex){
             ex.printStackTrace();
@@ -126,7 +128,7 @@ public class SongViewer extends JFrame {
         loadData();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
             SongViewer songViewer = new SongViewer();
             songViewer.setVisible(true);

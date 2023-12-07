@@ -5,24 +5,35 @@ public class SongManager implements SongManagerInterface{
     private String[] releaseYears;
 
     public SongManager(){
-        // Read data from files, create arrays, fill arrays with data, and sort each year's songs by track name
-        // Implementation needed
+        releaseYears = getDistinctYears();
+        songsByYear = new Song[releaseYears.length][];
+
+        for(int i = 0; i < releaseYears.length; i++){
+            songsByYear[i] = getSongsForYear(releaseYears[i]);
+            Arrays.sort(songsByYear[i]);
+        }
+    }
+
+    private String[] getDistinctYears(){
+        return new String[0];
+    }
+
+    private Song[] getSongsForYear(String year){
+        return new Song[0];
     }
 
     @Override
-    public int getYearCount() {
-        // Implementation needed
+    public int getYearCount(){
         return releaseYears.length;
     }
 
     @Override
-    public int getSongCount(int yearIndex) {
-        // Implementation needed
+    public int getSongCount(int yearIndex){
         return songsByYear[yearIndex].length;
     }
 
     @Override
-    public int getSongCount() {
+    public int getSongCount(){
         int totalCount = 0;
         for (Song[] yearSongs : songsByYear){
             totalCount += yearSongs.length;
@@ -31,12 +42,12 @@ public class SongManager implements SongManagerInterface{
     }
 
     @Override
-    public String getYearName(int yearIndex) {
+    public String getYearName(int yearIndex){
         return releaseYears[yearIndex];
     }
 
     @Override
-    public int getSongCount(String year) {
+    public int getSongCount(String year){
         int yearIndex = Arrays.asList(releaseYears).indexOf(year);
         if (yearIndex >= 0){
             return songsByYear[yearIndex].length;
@@ -45,17 +56,17 @@ public class SongManager implements SongManagerInterface{
     }
 
     @Override
-    public Song getSong(int yearIndex, int songIndex) {
+    public Song getSong(int yearIndex, int songIndex){
         return songsByYear[yearIndex][songIndex];
     }
 
     @Override
-    public Song[] getSongs(int yearIndex) {
+    public Song[] getSongs(int yearIndex){
         return Arrays.copyOf(songsByYear[yearIndex], songsByYear[yearIndex].length);
     }
 
     @Override
-    public int findSongYear(String trackName) {
+    public int findSongYear(String trackName){
         for (int yearIndex = 0; yearIndex < releaseYears.length; yearIndex++) {
             for (int songIndex = 0; songIndex < songsByYear[yearIndex].length; songIndex++) {
                 if (songsByYear[yearIndex][songIndex].trackName().equals(trackName)) {
@@ -63,6 +74,6 @@ public class SongManager implements SongManagerInterface{
                 }
             }
         }
-        return -1; // Song not found
+        return -1;
     }
 }
