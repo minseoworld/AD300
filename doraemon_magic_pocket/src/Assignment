@@ -1,0 +1,23 @@
+Assignment: Time Complexity and Space Complexity Analysis
+
+DoraemonPocket; Space Complexity: O(n)
+    The pocket needs space proportional to the number of items it contains.
+
+addItem; Time Complexity: O(1)
+    Adding items is usually fast, taking a short amount of time.
+
+removeItem; Time Complexity: O(n)
+    Removing items might take longer, especially if many items are in the pocket.
+
+printItmes; Time Complexity: O(n)
+    Printing all items also takes time, and it depends on the number of items.
+
+getNumItems; Time Complexity: O(1)
+    Checking the number of items is quick and doesn't take much time.
+
+
+
+
+
+
+
