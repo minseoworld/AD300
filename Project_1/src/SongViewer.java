@@ -76,8 +76,11 @@ public class SongViewer extends JFrame{
     private void loadData(){
         songInfoTextArea.setText("");
 
-        String selectedYear = yearComboBox.getSelectedItem().toString();
-        songInfoTextArea.setText(""); //try to clear the previous data
+        String selectedYear =(String) yearComboBox.getSelectedItem();
+        if(selectedYear == null){
+            JOptionPane.showMessageDialog(this, "Please select a year first");
+            return;
+        }
 
         try{
             CSVReader songReader = new CSVReader(new FileReader("spotify-2023.csv"));
