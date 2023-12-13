@@ -14,7 +14,7 @@ public class ReadCSV1{
                    System.out.println(songInfo[2]);
                }
            }
-        }catch(CsvValidationException | IOException e){
+        } catch(CsvValidationException | IOException e){
         }
     }
 }

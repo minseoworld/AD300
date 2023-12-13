@@ -54,7 +54,7 @@ public class SongViewer extends JFrame{
         loadDataButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                loadData();
+                loadDataForAllYears();
             }
         });
 
@@ -73,6 +73,33 @@ public class SongViewer extends JFrame{
         });
     }
 
+    private void loadDataForAllYears(){
+        songInfoTextArea.setText("");
+
+        try{
+            CSVReader songReader = new CSVReader(new FileReader("spotify-2023.csv"));
+            String[] songInfo;
+            while((songInfo = songReader.readNext()) != null){
+                if(songInfo.length < 9){
+                    continue;
+                }
+
+                String trackName = songInfo[0];
+                String artists = songInfo[1];
+                String releaseDate = songInfo[3] + "-" + songInfo[4] + "-" + songInfo[5];
+                String totalStreams = songInfo[8];
+
+                songInfoTextArea.append("Track Name:" + trackName + "\n");
+                songInfoTextArea.append("Artist(s): " + artists + "\n" );
+                songInfoTextArea.append("Release Date: " + releaseDate + "\n");
+                songInfoTextArea.append("Total Streams: " + totalStreams + "\n\n");
+            }
+            songReader.close();
+        } catch (CsvValidationException | IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error reading CSV file");
+        }
+    }
     private void loadData(){
         songInfoTextArea.setText("");
 
