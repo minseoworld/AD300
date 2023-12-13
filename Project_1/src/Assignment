@@ -1,8 +1,18 @@
-ReadCSV1; Time Complexity: O(m * n)
-    Reading the song information from the CSV file takes time proportional to the number of rows and columns in the file.
+#Time Complexity Analysis
+1. Read CSV1
+    Time Complexity: O(m * n)
+        The nested loop structure reads each row (`m`) and each column (`n`) of the CSV file. The time complexity is directly proportional to the number of rows and columns read.
+2. Print Song
+    Time Complexity: O(m * n)
+        Inside the nested loops, the program prints information from the CSV file. Again, the time complexity is proportional to the number of rows and columns printed.
 
-ReadCSV1; Space Complexity: O(1)
-    Printing details for a fixed number of songs from a fixed number of columns also takes a specific amount of time.
+#Space Complexity Analysis
+1. Read CSV1
+    Space Complexity: O(1)
+        The space used by the `ReadCSV1` class does not depend on the input size; it remains constant.
+2. CSVReader and String[] songInfo
+    Space Complexity: O(n)
+        The space used by the CSVReader object and the array `songInfo` depends on the number of columns (`n`) in each row of the CSV file.
 
-Printing Song Information; Time Complexity: O(m * n)
-    The code doesn't use much memory as it reads and processes the CSV file row by row, storing information for the current song being processed.
+== The overall space complexity is relatively low, mainly because the space required for reading and printing is proportional to the number of columns, which is constant in this case.
+== The time complexity is O(m * n), where `m` is the number of rows and `n` is the number of columns in the CSV file.
