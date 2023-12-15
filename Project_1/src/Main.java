@@ -1,6 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        SongManager a = new SongManager();
-        SongViewer b = new SongViewer(a);
+        // Create an instance of SongManager
+        SongManager songManager = new SongManager();
+
+        // Create an instance of SongViewer, passing the SongManager as a parameter
+        SongViewer songViewer = new SongViewer(songManager);
     }
 }

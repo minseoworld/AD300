@@ -43,8 +43,15 @@ public class SongManager implements SongManagerInterface {
     }
 
     @Override
-    public String[] getReleaseYears() {
-        return Arrays.copyOf(releaseYears, releaseYears.length);
+    public int findSongYear(String trackName) {
+        for (int row = 0; row < getYearCount(); row++) {
+            for (int col = 0; col < getSongCount(row); col++) {
+                if (trackName.equals(getSong(row, col).trackName())) {
+                    return row;
+                }
+            }
+        }
+        return -1;
     }
 
     private void sortSongs() {
