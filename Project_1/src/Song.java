@@ -1,7 +1,10 @@
 import java.util.Objects;
+
 /**
- * @author Minseo
  * Represents a song with various attributes.
+ * Modified to align with the structure of code B.
+ *
+ * @author Minseo
  */
 public record Song(
         String trackName,
@@ -9,8 +12,9 @@ public record Song(
         String releasedYear,
         String releasedMonth,
         String releasedDay,
-        String totalNumberOfStreamsOnSpotify) implements Comparable<Song>{
-    public Song{
+        String totalNumberOfStreamsOnSpotify) implements Comparable<Song> {
+
+    public Song {
         Objects.requireNonNull(trackName, "Track name cannot be null");
         Objects.requireNonNull(artistName, "Artist name cannot be null");
         Objects.requireNonNull(releasedYear, "Released year cannot be null");
@@ -21,39 +25,24 @@ public record Song(
         validateDateComponents(releasedYear, releasedMonth, releasedDay);
     }
 
-    private void validateDateComponents(String year, String month, String day){
-        if (!isValidDate(year, month, day)){
+    private void validateDateComponents(String year, String month, String day) {
+        if (!isValidDate(year, month, day)) {
             throw new IllegalArgumentException("Invalid date components");
         }
     }
 
-    private boolean isValidDate(String year, String month, String day){
+    private boolean isValidDate(String year, String month, String day) {
         return true;
     }
 
     @Override
-    public int compareTo(Song song){
+    public int compareTo(Song song) {
         return this.trackName().compareTo(song.trackName());
     }
 
     @Override
-    public boolean equals(Object o){
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Song song = (Song) o;
-        return Objects.equals(trackName, song.trackName) &&
-                Objects.equals(artistName, song.artistName) &&
-                Objects.equals(releasedYear, song.releasedYear) &&
-                Objects.equals(releasedMonth, song.releasedMonth) &&
-                Objects.equals(releasedDay, song.releasedDay) &&
-                Objects.equals(totalNumberOfStreamsOnSpotify, song.totalNumberOfStreamsOnSpotify);
-    }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(trackName, artistName, releasedYear, releasedMonth, releasedDay, totalNumberOfStreamsOnSpotify);
+    public String toString() {
+        return String.format("track name = %s, artist = %s, release year = %s, release month = %s, release day = %s, streams = %s",
+                trackName, artistName, releasedYear, releasedMonth, releasedDay, totalNumberOfStreamsOnSpotify);
     }
 }
-
-
-

@@ -2,14 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.io.IOException;
 import java.io.FileReader;
+import java.io.IOException;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-public class SongViewer extends JFrame{
+public class SongViewer extends JFrame {
     private JComboBox<String> yearComboBox;
     private JButton loadDataButton;
     private JButton prevButton;
@@ -20,7 +19,7 @@ public class SongViewer extends JFrame{
     private String[] years;
     private int selectedYearIndex = 0;
 
-    public SongViewer(){
+    public SongViewer() {
         setTitle("Song Viewer");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,7 +30,6 @@ public class SongViewer extends JFrame{
         prevButton = new JButton("Prev");
         nextButton = new JButton("Next");
         songInfoTextArea = new JTextArea();
-
 
         DefaultListModel<String> yearListModel = new DefaultListModel<>();
         JList<String> yearList = new JList<>(yearListModel);
@@ -51,48 +49,49 @@ public class SongViewer extends JFrame{
 
         years = new String[0];
 
-        loadDataButton.addActionListener(new ActionListener(){
+        loadDataButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                loadDataForAllYears();
+            public void actionPerformed(ActionEvent e) {
+                loadDataForSelectedYear();
             }
         });
 
-        prevButton.addActionListener(new ActionListener(){
+        prevButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 showPreviousYear();
             }
         });
 
-        nextButton.addActionListener(new ActionListener(){
+        nextButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 showNextYear();
             }
         });
     }
 
-    private void loadDataForAllYears(){
+    private void loadDataForSelectedYear() {
         songInfoTextArea.setText("");
 
-        try{
+        String selectedYear = (String) yearComboBox.getSelectedItem();
+        if (selectedYear == null) {
+            JOptionPane.showMessageDialog(this, "Please select a year first");
+            return;
+        }
+
+        try {
             CSVReader songReader = new CSVReader(new FileReader("spotify-2023.csv"));
             String[] songInfo;
-            while((songInfo = songReader.readNext()) != null){
-                if(songInfo.length < 9){
+            while ((songInfo = songReader.readNext()) != null) {
+                if (songInfo.length < 9) {
                     continue;
                 }
 
-                String trackName = songInfo[0];
-                String artists = songInfo[1];
-                String releaseDate = songInfo[3] + "-" + songInfo[4] + "-" + songInfo[5];
-                String totalStreams = songInfo[8];
-
-                songInfoTextArea.append("Track Name:" + trackName + "\n");
-                songInfoTextArea.append("Artist(s): " + artists + "\n" );
-                songInfoTextArea.append("Release Date: " + releaseDate + "\n");
-                songInfoTextArea.append("Total Streams: " + totalStreams + "\n\n");
+                String releaseYear = songInfo[3];
+                if (releaseYear.equals(selectedYear)) {
+                    displaySongInfo(songInfo);
+                }
             }
             songReader.close();
         } catch (CsvValidationException | IOException ex) {
@@ -100,65 +99,40 @@ public class SongViewer extends JFrame{
             JOptionPane.showMessageDialog(this, "Error reading CSV file");
         }
     }
-    private void loadData(){
-        songInfoTextArea.setText("");
 
-        String selectedYear =(String) yearComboBox.getSelectedItem();
-        if(selectedYear == null){
-            JOptionPane.showMessageDialog(this, "Please select a year first");
-            return;
-        }
+    private void displaySongInfo(String[] songInfo) {
+        String trackName = songInfo[0];
+        String artists = songInfo[1];
+        String releaseDate = songInfo[3] + "-" + songInfo[4] + "-" + songInfo[5];
+        String totalStreams = songInfo[8];
 
-        try{
-            CSVReader songReader = new CSVReader(new FileReader("spotify-2023.csv"));
-            String[] songInfo;
-            while ((songInfo = songReader.readNext()) != null){
-                if (songInfo.length < 9){
-                    continue;
-                }
-
-                String releaseYear = songInfo[3];
-                if (releaseYear.equals(selectedYear)){
-                    String trackName = songInfo[0];
-                    String artists = songInfo[1];
-                    String releaseDate = releaseYear + "-" + songInfo[4] + "-" + songInfo[5];
-                    String totalStreams = songInfo[8];
-
-                    songInfoTextArea.append("Track Name: " + trackName + "\n");
-                    songInfoTextArea.append("Artist(s): " + artists + "\n");
-                    songInfoTextArea.append("Release Date: " + releaseDate + "\n");
-                    songInfoTextArea.append("Total Streams: " + totalStreams + "\n\n");
-
-                }
-            }
-            songReader.close();
-        } catch(CsvValidationException | IOException ex){
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error reading CSV file.");
-        }
+        songInfoTextArea.append("Track Name: " + trackName + "\n");
+        songInfoTextArea.append("Artist(s): " + artists + "\n");
+        songInfoTextArea.append("Release Date: " + releaseDate + "\n");
+        songInfoTextArea.append("Total Streams: " + totalStreams + "\n\n");
     }
 
-    private void showPreviousYear(){
-        if(selectedYearIndex > 0){
+    private void showPreviousYear() {
+        if (selectedYearIndex > 0) {
             selectedYearIndex--;
             updateSelectedYear();
         }
     }
 
-    private void showNextYear(){
-        if(selectedYearIndex < years.length - 1){
+    private void showNextYear() {
+        if (selectedYearIndex < years.length - 1) {
             selectedYearIndex++;
             updateSelectedYear();
         }
     }
 
-    private void updateSelectedYear(){
+    private void updateSelectedYear() {
         yearComboBox.setSelectedItem(years[selectedYearIndex]);
         yearScrollPane.getViewport().setViewPosition(new Point(0, selectedYearIndex * yearScrollPane.getVerticalScrollBar().getUnitIncrement()));
-        loadData();
+        loadDataForSelectedYear();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             SongViewer songViewer = new SongViewer();
             songViewer.setVisible(true);
