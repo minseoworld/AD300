@@ -18,8 +18,10 @@ public class SongViewer extends JFrame {
 
     private String[] years;
     private int selectedYearIndex = 0;
+    private SongManager songManager;
 
-    public SongViewer() {
+    public SongViewer(SongManager songManager) {
+        this.songManager = songManager;
         setTitle("Song Viewer");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,7 +136,8 @@ public class SongViewer extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            SongViewer songViewer = new SongViewer();
+            SongManager songManager = new SongManager();
+            SongViewer songViewer = new SongViewer(songManager);
             songViewer.setVisible(true);
         });
     }

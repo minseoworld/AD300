@@ -43,15 +43,59 @@ public class SongManager implements SongManagerInterface {
     }
 
     @Override
-    public int findSongYear(String trackName) {
-        for (int row = 0; row < getYearCount(); row++) {
-            for (int col = 0; col < getSongCount(row); col++) {
-                if (trackName.equals(getSong(row, col).trackName())) {
-                    return row;
-                }
+    public int getYearCount() {
+        return releaseYears.length;
+    }
+
+    @Override
+    public int getSongCount(int yearIndex) {
+        if (yearIndex < 0 || yearIndex >= songs.length) {
+            throw new IllegalArgumentException("Invalid year index");
+        }
+        return songs[yearIndex].length;
+    }
+
+    @Override
+    public int getSongCount() {
+        int totalCount = 0;
+        for (int i = 0; i < songs.length; i++) {
+            totalCount += songs[i].length;
+        }
+        return totalCount;
+    }
+
+    @Override
+    public String getYearName(int yearIndex) {
+        if (yearIndex < 0 || yearIndex >= releaseYears.length) {
+            throw new IllegalArgumentException("Invalid year index");
+        }
+        return releaseYears[yearIndex];
+    }
+
+    @Override
+    public Song getSong(int yearIndex, int songIndex) {
+        if (yearIndex < 0 || yearIndex >= songs.length || songIndex < 0 || songIndex >= songs[yearIndex].length) {
+            throw new IllegalArgumentException("Invalid indices");
+        }
+        return songs[yearIndex][songIndex];
+    }
+
+    @Override
+    public int getSongCount(String year) {
+        for (int i = 0; i < releaseYears.length; i++) {
+            if (releaseYears[i].equals(year)) {
+                return songs[i].length;
             }
         }
-        return -1;
+        return 0;
+    }
+
+    @Override
+    public Song[] getSongs(int yearIndex) {
+        if (yearIndex < 0 || yearIndex >= songs.length) {
+            throw new IllegalArgumentException("Invalid year index");
+        }
+        return songs[yearIndex];
     }
 
     private void sortSongs() {
