@@ -1,48 +1,62 @@
-import java.util.Objects;
+public class Song implements Comparable<Song> {
 
-/**
- * Represents a song with various attributes.
- * Modified to align with the structure of code B.
- *
- * @author Minseo
- */
-public record Song(
-        String trackName,
-        String artistName,
-        String releasedYear,
-        String releasedMonth,
-        String releasedDay,
-        String totalNumberOfStreamsOnSpotify) implements Comparable<Song> {
+    private String title;
+    private String artist;
+    private String album;
+    private String genre;
+    private String releaseYear;
+    private String duration;
 
-    public Song {
-        Objects.requireNonNull(trackName, "Track name cannot be null");
-        Objects.requireNonNull(artistName, "Artist name cannot be null");
-        Objects.requireNonNull(releasedYear, "Released year cannot be null");
-        Objects.requireNonNull(releasedMonth, "Released month cannot be null");
-        Objects.requireNonNull(releasedDay, "Released day cannot be null");
-        Objects.requireNonNull(totalNumberOfStreamsOnSpotify, "Total streams cannot be null");
-
-        validateDateComponents(releasedYear, releasedMonth, releasedDay);
+    public Song(String title, String artist, String album, String genre, String releaseYear, String duration) {
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.genre = genre;
+        this.releaseYear = releaseYear;
+        this.duration = duration;
     }
 
-    private void validateDateComponents(String year, String month, String day) {
-        if (!isValidDate(year, month, day)) {
-            throw new IllegalArgumentException("Invalid date components");
-        }
+    public String getTitle() {
+        return title;
     }
 
-    private boolean isValidDate(String year, String month, String day) {
-        return true;
+    public String getArtist() {
+        return artist;
     }
 
+    public String getAlbum() {
+        return album;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getReleaseYear() {
+        return releaseYear;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    // Implement Comparable interface based on title
     @Override
-    public int compareTo(Song song) {
-        return this.trackName().compareTo(song.trackName());
+    public int compareTo(Song other) {
+        return this.title.compareTo(other.title);
     }
+
+    // Other getters and methods...
 
     @Override
     public String toString() {
-        return String.format("track name = %s, artist = %s, release year = %s, release month = %s, release day = %s, streams = %s",
-                trackName, artistName, releasedYear, releasedMonth, releasedDay, totalNumberOfStreamsOnSpotify);
+        return "Song{" +
+                "title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", album='" + album + '\'' +
+                ", genre='" + genre + '\'' +
+                ", releaseYear='" + releaseYear + '\'' +
+                ", duration='" + duration + '\'' +
+                '}';
     }
 }

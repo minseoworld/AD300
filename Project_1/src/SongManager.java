@@ -98,6 +98,18 @@ public class SongManager implements SongManagerInterface {
         return songs[yearIndex];
     }
 
+    @Override
+    public String findSongYear(String songTitle) {
+        for (int i = 0; i < songs.length; i++) {
+            for (Song song : songs[i]) {
+                if (song.getTitle().equals(songTitle)) {
+                    return releaseYears[i];
+                }
+            }
+        }
+        return null; // Song not found
+    }
+
     private void sortSongs() {
         for (int rowIndex = 0; rowIndex < getYearCount(); rowIndex++) {
             Arrays.sort(songs[rowIndex]);

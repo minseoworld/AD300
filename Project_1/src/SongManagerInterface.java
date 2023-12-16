@@ -49,12 +49,6 @@ public interface SongManagerInterface {
     one)
      */
     Song[] getSongs(int yearIndex);
-    /**
-     * Retrieves the first release year index associated with the specified song's
-     track name
-     * @param trackName the track name to search for
-     * @return the first release year index containing the specified
-    song, or -1 if not found
-     */
-    int findSongYear(String trackName);
+
+    String findSongYear(String songTitle);
 }
